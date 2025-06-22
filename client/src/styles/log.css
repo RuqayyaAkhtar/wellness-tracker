@@ -1,0 +1,138 @@
+@import './variables.css';
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+    background-color: var(--shadow-color);
+}
+
+.logMainL {
+    background-color: var(--shadow-color);
+    height: max-content;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3% 0 !important;
+}
+.log-entry {
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.168), -1px -1px 15px rgba(0, 0, 0, 0.168);
+    text-align: center;
+    background-color: var(--light-color);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    height: max-content;
+    min-width: 500px !important;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    padding: 2% 0;
+    box-sizing: border-box;
+    align-items: center;
+    gap: 30px;
+    animation: formm 0.5s ease;
+    border-radius: 10px;
+    z-index: 5;
+}
+
+.lb1 {
+    margin-top: 10px;
+}
+.date-inp{
+    color: #7A7995 !important;
+    
+}
+.moodD {
+    width: 100%;
+}
+.logh{
+    color: #FFFFFF;
+}
+.log-entry form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 0 9%;
+    box-sizing: border-box;
+    margin-top: 10px;
+    width: 100%;
+
+}
+
+form label {
+    justify-self: flex-start;
+    color: #FFFFFF;
+    font-size: 14px;
+    margin: 10px 0;
+}
+
+form input {
+    height: 38px;
+    border-radius: none;
+    padding-left: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    outline: none;
+    width: 85%;
+    background-color: var(--shadow-color);
+    color: #FFFFFF;
+}
+
+form input::placeholder {
+    color:#7A7995 !important ;
+}
+
+form button {
+    height: 35px;
+    background-color: var(--button-color);
+    border-radius: none;
+    border: none;
+    outline: none;
+    color: #FFFFFF;
+    font-weight: 500;
+    letter-spacing: 1px;
+    font-size: 15px;
+    margin-top: 20px;
+    padding: 5px;
+    cursor: pointer;
+    transition: all .3s;
+}
+
+
+form button:hover {
+  text-decoration: underline;
+}
+
+.moodB {
+    width: 100%;
+    background-color: transparent;
+    font-size: 20px;
+    margin: 5px 0 10px 0;
+}
+
+.ic svg {
+    font-size: 18px;
+}
+/* @media */
+@media (max-width: 558px) {
+    .log-entry {
+        min-width: 90% !important;
+         padding-top: 20px;
+        padding-bottom: 20px;
+    }
+    form input {
+        width: 100%;
+    }
+    .logh {
+        font-size: 20px;
+    }
+    .ic svg {
+        font-size: 16px;
+    }
+}

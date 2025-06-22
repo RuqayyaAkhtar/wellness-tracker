@@ -1,0 +1,237 @@
+@import './variables.css';
+
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+    background-color: var(--shadow-color);
+}
+
+.loginMainS {
+    background-color: var(--shadow-color);
+    height: max-content;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3% 0 !important;
+}
+
+
+
+.sign-in {
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.168), -1px -1px 15px rgba(0, 0, 0, 0.168);
+    text-align: center;
+    background-color: var(--light-color);
+    border: 1px solid rgba(255, 255, 255, 0.185);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    height: max-content;
+    width: 40%;
+    min-width: 450px !important;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    padding: 2% 0;
+    box-sizing: border-box;
+    align-items: center;
+    gap: 40px;
+    animation: formm 0.5s ease;
+    border-radius: 10px;
+    z-index: 5;
+}
+
+.dInS {
+    border-radius: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.1);;
+}
+
+.logh {
+    color: black;
+}
+
+.sign-in form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 0 9%;
+    box-sizing: border-box;
+    margin-top: 10px;
+    width: 100%;
+    gap: 5px;
+}
+
+form input {
+    height: 38px;
+    border-radius: 5px;
+    padding-left: 10px;
+    border: none;
+    outline: none;
+    border-left: 1px solid  rgba(255, 255, 255, 0.1);
+    width: 85%;
+    background-color: transparent;
+    color: white !important;
+}
+
+.bg-in {
+    background-color: transparent !important;
+}
+
+
+input.bg-in:-webkit-autofill {
+    background-color: transparent !important;
+    -webkit-box-shadow: 0 0 0 1000px transparent inset !important;
+    -webkit-text-fill-color: white !important;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+form button {
+    height: 35px;
+    background-color: var(--button-color);
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    color: var(--secondary-color);
+    font-weight: bold;
+    letter-spacing: 1px;
+    font-size: 15px;
+    margin-top: 20px;
+    padding: 5px;
+    cursor: pointer;
+}
+.loginBtn :hover{
+    text-decoration: underline;
+}
+.cros1 {
+    top: 20px;
+    right: 2%;
+}
+
+.sign-in p {
+    font-family: 'poppins';
+    font-size: 12px;
+    color: #6E6C94;
+    padding: 0 5%;
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+.nop {
+    color: #6E6C94 !important;
+}
+
+.mood1 {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+
+.moodInp::placeholder {
+    font-size: 20px;
+}
+
+form label {
+    align-self: flex-start;
+    color: #1B1919;
+    font-size: 15px;
+    margin: 2% 0;
+}
+
+.inp-main {
+    width: 100%;
+    border: 1px solid rgba(187, 185, 185, 0.622);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 10px;
+    box-sizing: border-box;
+    margin: 1% 0;
+}
+
+.in {
+    font-size: 20px;
+    color: #6E6C94;
+    margin: 8px;
+}
+
+.rout {
+    border: none;
+    outline: none;
+    background-color: transparent;
+}
+.icon{
+    color: #6E6C94;
+}
+.rout a {
+    color: var(--button-color);
+    font-size: 14px;
+}
+
+.Toastify__toast {
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 16px;
+  color: #0C0A36;
+  background-color: #2696FD;
+  border-left: 6px solid #0C0A36;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.24);
+}
+
+/* Info style */
+.Toastify__toast--info {
+  background-color: #2696FD;
+  color: #0C0A36;
+  border-left: 6px solid #006064;
+}
+
+/* Success style */
+.Toastify__toast--success {
+  color: #0C0A36;
+  border-left: 6px solid #006064;
+}
+
+/* Warning style */
+.Toastify__toast--warn {
+  background-color: #2696FD;
+  color: #0C0A36;
+  border-left: 6px solid #856404;
+}
+
+/* Error style */
+.Toastify__toast--error {
+  background-color: #2696FD;
+  border-left: 6px solid #721c24;
+  color: #0C0A36;
+}
+/* @media */
+@media screen and (max-width: 558px) {
+    .sign-in {
+        padding-top: 20px;
+        padding-bottom: 20px;
+        width: 90%;
+        min-width: unset !important;
+        gap: 30px;
+    }
+    .loginMainS {
+        padding: 5% 0 !important;
+    }
+    .sign-in form {
+        padding: 0 5%;
+    }
+    form input {
+        width: 100%;
+    }
+    .cros1 {
+        top: 10px;
+        right: 5%;
+    }
+    .logh{
+        font-size: 20px;
+    }
+}
