@@ -14,6 +14,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Slide } from 'react-toastify';
 import ReminderComponent from '../components/Reminders';
 import { IoMdFitness } from "react-icons/io";
+import { jwtDecode } from 'jwt-decode';
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -153,26 +154,43 @@ export default function Dashboard() {
   const logEntry = () => { navigate('/log-entry'); };
 
   // daily reminder times and messages
-  useEffect(() => {
-    if (!user) return;
-    const hour = moment().hour();
-    let message = '';
-    if (hour < 12) {
-      message = '☀️ Good morning! Time for your daily wellness check‑in.';
-    } else if (hour >= 12 && hour < 17) {
-      message = '🌤️ Good afternoon! Keep staying mindful and hydrated!';
-    } else {
-      message = '🌙 Good evening! Don’t forget to log today’s activities.';
-    }
-    // Show a persistent toast
-    toast(message, {
-      autoClose: false,
-      closeOnClick: false,
-      closeButton: true,
-      position: "top-center",
-      progressStyle: { backgroundColor: '#38bdf8' } 
-    });
-  }, [user]);
+
+  // Function to play sound
+
+const playReminderSound = () => {
+  const audio = new Audio('/toast.mp3'); 
+  audio.volume = 1;
+  audio.play().catch((e) => {
+    console.warn('Audio play error:', e);
+  });
+};
+
+useEffect(() => {
+  if (!user) return;
+
+  const hour = moment().hour();
+  let message = '';
+
+  if (hour < 12) {
+    message = '☀️ Good morning! Time for your daily wellness check‑in.';
+  } else if (hour >= 12 && hour < 17) {
+    message = '🌤️ Good afternoon! Keep staying mindful and hydrated!';
+  } else {
+    message = '🌙 Good evening! Don’t forget to log today’s activities.';
+  }
+
+  toast(message, {
+    toastId: 'welcome-toast',
+    autoClose: false,
+    closeOnClick: false,
+    closeButton: true,
+    position: 'top-center',
+    progressStyle: { backgroundColor: '#38bdf8' }
+  });
+
+  playReminderSound(); 
+}, [user]);
+
   // reminder//
   useEffect(() => {
     const interval = setInterval(() => {
@@ -216,6 +234,38 @@ export default function Dashboard() {
     return () => clearInterval(interval);
   }, [reminders, shownReminderIds]);
 
+useEffect(() => {
+  if (!token) navigate('/');
+}, []);
+// ...........token
+
+
+
+useEffect(() => {
+  const interval = setInterval(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      try {
+        const decoded = jwtDecode(token);
+        const isExpired = decoded.exp * 1000 < Date.now();
+        if (isExpired) {
+          toast.warn("Session expired. Logging out...", {
+            progressStyle: { backgroundColor: '#f87171' }
+          });
+          localStorage.removeItem('token');
+          navigate('/');
+        }
+      } catch (err) {
+        console.log(err)
+        localStorage.removeItem('token');
+        navigate('/');
+      }
+    }
+  }, 10000); // Check every 10 seconds
+
+  return () => clearInterval(interval);
+}, []);
+
 
   return (
     <div className="dashboard-container dMain">
@@ -246,7 +296,7 @@ export default function Dashboard() {
                 </h2>
               </div>
               {latestMood && (
-                <button onClick={() => openEditor('mood')}>
+                <button onClick={() => openEditor('mood')} className='editBtn1'>
                   <MdOutlineModeEdit className="svg" />
                   Edit</button>
               )}
@@ -260,7 +310,7 @@ export default function Dashboard() {
                 </h2>
               </div>
               {latestSleep && (
-                <button onClick={() => openEditor('sleep')} className="bg-white border px-3 py-1 rounded text-sm">
+                <button onClick={() => openEditor('sleep')} className="editBtn2 bg-white border px-3 py-1 rounded text-sm">
                   <MdOutlineModeEdit className='svg' />
                   Edit
                 </button>
@@ -275,7 +325,7 @@ export default function Dashboard() {
                 </h2>
               </div>
               {latestWater && (
-                <button onClick={() => openEditor("water")} className="bg-white border text-sm px-3 py-1 rounded hover:bg-gray-100">
+                <button onClick={() => openEditor("water")} className="editBtn3 bg-white border text-sm px-3 py-1 rounded hover:bg-gray-100">
                   <MdOutlineModeEdit className='svg' />
                   Edit
                 </button>
@@ -290,7 +340,7 @@ export default function Dashboard() {
                 </h2>
               </div>
               {latestExercise && (
-                <button onClick={() => openEditor("exercise")} className="bg-white border text-sm px-3 py-1 rounded hover:bg-gray-100">
+                <button onClick={() => openEditor("exercise")} className="editBtn4 bg-white border text-sm px-3 py-1 rounded hover:bg-gray-100">
                   <MdOutlineModeEdit className='svg' />
                   Edit
                 </button>

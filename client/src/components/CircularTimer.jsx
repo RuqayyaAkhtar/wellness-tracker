@@ -4,6 +4,7 @@ import moment from 'moment';
 export default function CircularTimer({ targetTime, color }) {
   const [secondsLeft, setSecondsLeft] = useState(0);
   const totalRef = useRef(null);
+  const notifiedRef = useRef(false); //Prevent multiple notifications
 
   useEffect(() => {
     const tick = () => {
@@ -12,16 +13,26 @@ export default function CircularTimer({ targetTime, color }) {
       let next = moment().hour(h).minute(m).second(0);
       if (next.isBefore(now)) next = next.add(1, 'day');
       const diff = next.diff(now, 'seconds');
+
       if (totalRef.current === null) {
         totalRef.current = diff;
       }
+
       setSecondsLeft(diff);
+
+      if (diff <= 0 && !notifiedRef.current) {
+        //Play tone
+        const audio = new Audio('/toast.mp3');
+        audio.play().catch(err => console.log("Audio error:", err));
+
+        notifiedRef.current = true;
+      }
     };
 
     tick();
     const id = setInterval(tick, 1000);
     return () => clearInterval(id);
-  }, [targetTime]);
+  }, [targetTime, color]);
 
   const total = totalRef.current > 0 ? totalRef.current : 1;
   const fraction = Math.max(0, Math.min(1, secondsLeft / total));

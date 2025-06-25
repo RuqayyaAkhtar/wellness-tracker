@@ -58,6 +58,14 @@ export default function DashboardCharts({ logs }) {
     color: COLORS[i % COLORS.length]
   }));
   const customColors = ['#00A2FF', '#3C39AB', '#28BE9D', '#FFAB2D', '#FD5353'];
+  const moodLabelMap = {
+    '😊': 'Happy',
+    '😟': 'Sad',
+    '😢': 'Crying',
+    '😁': 'Laugh',
+    '😐': 'Neutral'
+  };
+
   return (
     <div className="flex gap-6 chartmain ">
       {/* Water */}
@@ -67,22 +75,22 @@ export default function DashboardCharts({ logs }) {
           <BarChart data={waterData}>
             <defs>
               <linearGradient id="waterGradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#0092E6" stopOpacity={0.8} />
-                <stop offset="95%" stopColor="#716473" stopOpacity={0.6} />
+                <stop offset="5%" stopColor="#FFAB2D" stopOpacity={0.6} />
+                <stop offset="95%" stopColor="#2D213E " stopOpacity={0.9} />
               </linearGradient>
             </defs>
             <XAxis
               dataKey="date"
               tick={{ fill: "#4D4C5B", fontSize: 12 }}
-              axisLine={{ stroke: "#000000c5", strokeWidth: 1 }}
-              tickLine={{ stroke: "#000000c5", strokeWidth: 1 }}
+              axisLine={{ stroke: "#373E48", strokeWidth: 1 }}
+              tickLine={{ stroke: "#373E48", strokeWidth: 1 }}
             />
             <YAxis
               tick={{ fill: "#4D4C5B", fontSize: 12 }}
-              axisLine={{ stroke: "#000000c5", strokeWidth: 1 }}
-              tickLine={{ stroke: "#000000c5", strokeWidth: 1 }}
+              axisLine={{ stroke: "#373E48", strokeWidth: 1 }}
+              tickLine={{ stroke: "#373E48", strokeWidth: 1 }}
             />
-           <Tooltip
+            <Tooltip
               contentStyle={{
                 backgroundColor: '#1F1F2F',
                 borderRadius: '8px',
@@ -114,8 +122,8 @@ export default function DashboardCharts({ logs }) {
           >
             <defs>
               <linearGradient id="sleepGradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#0053D6" stopOpacity={1} />
-                <stop offset="95%" stopColor="#1A184F" stopOpacity={1} />
+                <stop offset="5%" stopColor="#2D213E" stopOpacity={0.6} />
+                <stop offset="95%" stopColor="#DE4949" stopOpacity={0.5} />
               </linearGradient>
             </defs>
             <XAxis
@@ -136,7 +144,7 @@ export default function DashboardCharts({ logs }) {
                 border: 'none',
               }}
               labelStyle={{ color: '#00A2FF', fontWeight: 'bold' }}
-              itemStyle={{ color: '#2696FD' }} 
+              itemStyle={{ color: '#2696FD' }}
             />
             <Bar
               dataKey="sleep"
@@ -148,10 +156,10 @@ export default function DashboardCharts({ logs }) {
             <Area
               type="linear"
               dataKey="sleep"
-              stroke="#2696FD" 
+              stroke="#FD5353"
               fill="url(#sleepGradient)"
-              strokeWidth={5}
-              dot={{ r: 4, stroke: '#2696FD', strokeWidth: 2, fill: '#2696FD' }} 
+              strokeWidth={1}
+              dot={{ r: 4, stroke: '#FD5353', strokeWidth: 2, fill: '#FD5353' }}
               activeDot={{ r: 6 }}
             />
           </AreaChart>
@@ -159,7 +167,10 @@ export default function DashboardCharts({ logs }) {
       </div>
       {/* Mood */}
       <div className="bg-white p-4 rounded shadow col-span-1 md:col-span-2 chart-d">
-        <h2 className="text-lg font-semibold mb-2"><span className='icons'><FaRegFaceGrinWink /></span> Mood Distribution</h2>
+        <h2 className="text-lg font-semibold mb-2">
+          <span className='icons'><FaRegFaceGrinWink /></span> Mood Distribution
+        </h2>
+
         <ResponsiveContainer width="100%" height={250}>
           <PieChart>
             <Pie
@@ -171,11 +182,13 @@ export default function DashboardCharts({ logs }) {
               innerRadius={20}
               outerRadius={80}
               labelLine={false}
-              label={({ cx, cy, midAngle, outerRadius, name, percent }) => {
+              label={({ cx, cy, midAngle, outerRadius, percent, index }) => {
                 const RADIAN = Math.PI / 180;
-                const labelRadius = outerRadius + 30; 
+                const labelRadius = outerRadius + 30;
                 const x = cx + labelRadius * Math.cos(-midAngle * RADIAN);
                 const y = cy + labelRadius * Math.sin(-midAngle * RADIAN);
+                const name = moodData[index]?.name || '';
+
                 return (
                   <text
                     x={x}
@@ -209,10 +222,34 @@ export default function DashboardCharts({ logs }) {
               labelStyle={{ color: '#00A2FF', fontWeight: 'bold' }}
               itemStyle={{ color: '#2696FD' }}
             />
-
           </PieChart>
         </ResponsiveContainer>
+
+        {/* Legend */}
+        <div className="flex justify-center gap-6 mt-4 flex-wrap">
+          {moodData.map((entry, i) => (
+            <div className="flex items-center gap-2">
+              <div
+                style={{
+                  backgroundColor: customColors[i % customColors.length],
+                  width: '12px',
+                  height: '12px',
+                  borderRadius: '50%',
+                  display: 'inline-block'
+                }}
+              ></div>
+              <span className="text-sm text-[#4D4C5B] font-medium" style={{fontSize:"12px",margin:"5px"}}>
+                {moodLabelMap[entry.name] || entry.name}
+              </span>
+            </div>
+
+          ))}
+        </div>
+
+
+
       </div>
+
       {/*Exercise Chart */}
       <div className="bg-white p-4 rounded shadow col-span-1 md:col-span-2 chart-d">
         <h2 className="text-lg font-semibold mb-2"><span className='icons'><FaRunning /></span> Exercise Activity</h2>
@@ -224,7 +261,7 @@ export default function DashboardCharts({ logs }) {
             <defs>
               <linearGradient id="exerciseGradient" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="10%" stopColor="#2D213E" stopOpacity={0.6} />
-                <stop offset="90%" stopColor="#422D38" stopOpacity={0.8} />
+                <stop offset="90%" stopColor="#28BE9D" stopOpacity={0.6} />
               </linearGradient>
             </defs>
             <XAxis
@@ -238,14 +275,14 @@ export default function DashboardCharts({ logs }) {
               axisLine={{ stroke: "#000000c5", strokeWidth: 1 }}
               tickLine={{ stroke: "#000000c5", strokeWidth: 1 }}
             />
-             <Tooltip
+            <Tooltip
               contentStyle={{
                 backgroundColor: '#1F1F2F',
                 borderRadius: '8px',
                 border: 'none',
               }}
               labelStyle={{ color: '#00A2FF', fontWeight: 'bold' }}
-              itemStyle={{ color: '#2696FD' }} 
+              itemStyle={{ color: '#2696FD' }}
             />
             <Area
               type="monotone"

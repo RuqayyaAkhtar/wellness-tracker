@@ -16,13 +16,13 @@ import '../styles/register.css';
 export default function Register() {
   // const [form, setForm] = useState({ name: '', email: '', password: '' });
   const [form, setForm] = useState({
-  name: '',
-  email: '',
-  password: '',
-  birthday: '',
-  gender: '',
-  country: ''
-});
+    name: '',
+    email: '',
+    password: '',
+    birthday: '',
+    gender: '',
+    country: ''
+  });
 
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
@@ -41,7 +41,7 @@ export default function Register() {
     // Simple validation
     if (!form.name || !form.email || !form.password) {
       toast.error("All fields are required.", {
-        progressStyle: { backgroundColor: '#f87171' } // red
+        progressStyle: { backgroundColor: '#f87171' } 
       });
       return;
     }
@@ -59,6 +59,24 @@ export default function Register() {
       });
       return;
     }
+    // Password strength regex: at least 8 chars, 1 letter, 1 digit
+
+    if (!passwordRegex.test(form.password)) {
+      toast.error("Password must contain at least 8 characters, including letters and numbers.", {
+        progressStyle: { backgroundColor: '#f87171' }
+      });
+      return;
+    }
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+    if (!passwordRegex.test(form.password)) {
+      toast.error("Password must include letters, numbers, and a special character.", {
+        progressStyle: { backgroundColor: '#f87171' }
+      });
+      return;
+    }
+
+
 
     try {
       const res = await axios.post(`${import.meta.env.VITE_BACKEND_LINK}/api/auth/register`, form);

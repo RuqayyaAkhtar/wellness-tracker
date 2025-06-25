@@ -8,6 +8,7 @@ export default function ReminderSection({ reminders, setReminders }) {
     const [selectedDate, setSelectedDate] = useState(today.toISOString().split('T')[0]);
     const [time, setTime] = useState('');
     const [message, setMessage] = useState('');
+    
     const handleAddReminder = async () => {
         if (!time || !message) {
             alert("Please fill time and message");
@@ -32,9 +33,11 @@ export default function ReminderSection({ reminders, setReminders }) {
                 setReminders(updated);
                 setTime("");
                 setMessage("");
+
             } else {
                 console.error("Add reminder failed", data);
             }
+            
         } catch (err) {
             console.error("Error adding reminder:", err);
         }
