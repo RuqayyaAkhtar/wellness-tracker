@@ -1,6 +1,6 @@
 import express from 'express';
-import verifyToken from '../middlewares/authMiddleware.js';
-import User from '../models/user.js'; // assumes reminders are stored in User
+import { verifyToken } from '../middlewares/authMiddleware.js';
+import User from '../models/user.js'; 
 
 const router = express.Router();
 

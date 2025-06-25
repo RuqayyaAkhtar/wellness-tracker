@@ -21,7 +21,7 @@ router.post("/login", async (req, res) => {
 
     // 3. Create token WITH user ID (very important)
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "1d",
+      expiresIn: "50m",
     });
 
     res.json({ token, user: { id: user._id, email: user.email } });
