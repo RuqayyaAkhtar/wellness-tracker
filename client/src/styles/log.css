@@ -46,7 +46,7 @@ body {
     margin-top: 10px;
 }
 .date-inp{
-    color: #7A7995 !important;
+    color: #AAA7A7 !important;
     
 }
 .moodD {
@@ -85,7 +85,7 @@ form input {
 }
 
 form input::placeholder {
-    color:#7A7995 !important ;
+    color:#AAA7A7 !important ;
 }
 
 form button {

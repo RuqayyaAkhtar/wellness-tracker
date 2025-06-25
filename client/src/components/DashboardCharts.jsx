@@ -129,13 +129,13 @@ export default function DashboardCharts({ logs }) {
             <XAxis
               dataKey="date"
               tick={{ fill: "#4D4C5B", fontSize: 12 }}
-              axisLine={{ stroke: "#000000c5", strokeWidth: 1 }}
-              tickLine={{ stroke: "#000000c5", strokeWidth: 1 }}
+              axisLine={{ stroke: "#373E48", strokeWidth: 1 }}
+              tickLine={{ stroke: "#373E48", strokeWidth: 1 }}
             />
             <YAxis
               tick={{ fill: "#4D4C5B", fontSize: 12 }}
-              axisLine={{ stroke: "#000000c5", strokeWidth: 1 }}
-              tickLine={{ stroke: "#000000c5", strokeWidth: 1 }}
+              axisLine={{ stroke: "#373E48", strokeWidth: 1 }}
+              tickLine={{ stroke: "#373E48", strokeWidth: 1 }}
             />
             <Tooltip
               contentStyle={{
@@ -267,13 +267,13 @@ export default function DashboardCharts({ logs }) {
             <XAxis
               dataKey="date"
               tick={{ fill: "#4D4C5B", fontSize: 12 }}
-              axisLine={{ stroke: "#000000c5", strokeWidth: 1 }}
-              tickLine={{ stroke: "#000000c5", strokeWidth: 1 }}
+              axisLine={{ stroke: "#373E48", strokeWidth: 1 }}
+              tickLine={{ stroke: "#373E48", strokeWidth: 1 }}
             />
             <YAxis
               tick={{ fill: "#4D4C5B", fontSize: 12 }}
-              axisLine={{ stroke: "#000000c5", strokeWidth: 1 }}
-              tickLine={{ stroke: "#000000c5", strokeWidth: 1 }}
+              axisLine={{ stroke: "#373E48", strokeWidth: 1 }}
+              tickLine={{ stroke: "#373E48", strokeWidth: 1 }}
             />
             <Tooltip
               contentStyle={{

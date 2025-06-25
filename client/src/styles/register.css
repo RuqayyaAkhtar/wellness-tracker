@@ -80,12 +80,12 @@ form input {
 .bg-in {
     background-color: transparent !important;
     border: none;
-    color: #6E6C94;
+    color: #AAA7A7;
 }
 
 form svg {
-    color: #6E6C94 !important;
-    fill: #6E6C94 !important;
+    color: #AAA7A7 !important;
+    fill: #AAA7A7 !important;
 }
 
 input.bg-in:-webkit-autofill {
@@ -124,7 +124,7 @@ form button:hover {
 .sign-up p {
     font-family: 'poppins';
     font-size: 12px;
-    color: #6E6C94;
+    color: #AAA7A7;
     padding: 0 5%;
     margin-top: 10px;
     margin-bottom: 15px;
@@ -152,7 +152,7 @@ form label {
 }
 
 form select {
-    color: #6E6C94;
+    color: #AAA7A7;
 }
 
 .inp-main {
@@ -168,7 +168,7 @@ form select {
 
 .in {
     font-size: 20px;
-    color: #6E6C94;
+    color: #AAA7A7;
     margin: 8px;
 }
 

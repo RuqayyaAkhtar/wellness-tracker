@@ -116,14 +116,14 @@ form button {
 .sign-in p {
     font-family: 'poppins';
     font-size: 12px;
-    color: #6E6C94;
+    color: #AAA7A7;
     padding: 0 5%;
     margin-top: 10px;
     margin-bottom: 15px;
 }
 
 .nop {
-    color: #6E6C94 !important;
+    color: #AAA7A7 !important;
 }
 
 .mood1 {
@@ -156,7 +156,7 @@ form label {
 
 .in {
     font-size: 20px;
-    color: #6E6C94;
+    color: #AAA7A7;
     margin: 8px;
 }
 
@@ -166,7 +166,7 @@ form label {
     background-color: transparent;
 }
 .icon{
-    color: #6E6C94;
+    color: #AAA7A7;
 }
 .rout a {
     color: var(--button-color);
@@ -219,7 +219,7 @@ form label {
         gap: 30px;
     }
     .loginMainS {
-        padding: 5% 0 !important;
+        padding: 8% 0 5% 0 !important;
     }
     .sign-in form {
         padding: 0 5%;

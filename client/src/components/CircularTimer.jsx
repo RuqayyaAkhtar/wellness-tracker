@@ -1,10 +1,11 @@
+// src/components/CircularTimer.jsx
 import React, { useEffect, useState, useRef } from 'react';
 import moment from 'moment';
 
 export default function CircularTimer({ targetTime, color }) {
   const [secondsLeft, setSecondsLeft] = useState(0);
   const totalRef = useRef(null);
-  const notifiedRef = useRef(false); //Prevent multiple notifications
+  const notifiedRef = useRef(false); // prevent multiple audio plays
 
   useEffect(() => {
     const tick = () => {
@@ -14,17 +15,12 @@ export default function CircularTimer({ targetTime, color }) {
       if (next.isBefore(now)) next = next.add(1, 'day');
       const diff = next.diff(now, 'seconds');
 
-      if (totalRef.current === null) {
-        totalRef.current = diff;
-      }
-
+      if (totalRef.current === null) totalRef.current = diff;
       setSecondsLeft(diff);
 
       if (diff <= 0 && !notifiedRef.current) {
-        //Play tone
         const audio = new Audio('/toast.mp3');
         audio.play().catch(err => console.log("Audio error:", err));
-
         notifiedRef.current = true;
       }
     };
@@ -32,7 +28,7 @@ export default function CircularTimer({ targetTime, color }) {
     tick();
     const id = setInterval(tick, 1000);
     return () => clearInterval(id);
-  }, [targetTime, color]);
+  }, [targetTime]);
 
   const total = totalRef.current > 0 ? totalRef.current : 1;
   const fraction = Math.max(0, Math.min(1, secondsLeft / total));

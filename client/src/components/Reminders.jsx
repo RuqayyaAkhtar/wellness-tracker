@@ -4,6 +4,8 @@ import { MdDelete } from 'react-icons/md';
 import { CiCirclePlus } from "react-icons/ci";
 import '../styles/reminder.css'
 export default function ReminderSection({ reminders, setReminders }) {
+    const COLORS = ['#00A2FF','#28BE9D', '#FD5353', '#FFAB2D'];
+
     const today = new Date();
     const [selectedDate, setSelectedDate] = useState(today.toISOString().split('T')[0]);
     const [time, setTime] = useState('');
@@ -76,7 +78,7 @@ export default function ReminderSection({ reminders, setReminders }) {
                                 borderRadius: '6px',
                                 background: selectedDate === dateStr ? '#2696FD' : 'transparent',
                                 // color: selectedDate === dateStr ? '#fffff' : '#6E6C94',
-                                color: selectedDate === dateStr ? '#ffffff' : '#6E6C94',
+                                color: selectedDate === dateStr ? '#ffffff' : '#AAA7A7',
                                 cursor: 'pointer',
                             }}
                             className='dateDiv'
@@ -114,13 +116,13 @@ export default function ReminderSection({ reminders, setReminders }) {
                             }}
                         >
                             <div>
-                                <CircularTimer targetTime={r.time} color="#3693FF" />
+                                <CircularTimer targetTime={r.time} color={COLORS[i % COLORS.length]} />
                             </div>
                             <div className='small-rd' style={{ display: 'flex', justifyContent: 'space-between', width: '70%', alignItems: 'center' }}>
 
                                 <div className='set-r'>
                                     <p style={{ textAlign: 'left', color: 'white' }}>{r.message}</p>
-                                    <small style={{ width: 'max-content', color: '#6E6C94' }}>{r.time}</small>
+                                    <small style={{ width: 'max-content', color: '#AAA7A7' }}>{r.time}</small>
                                 </div>
                                 <button onClick={() => handleDelete(r._id)} className='del'>
                                     <MdDelete />

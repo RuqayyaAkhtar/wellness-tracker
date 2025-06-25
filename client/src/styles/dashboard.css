@@ -78,7 +78,7 @@ body {
 }
 
 .navDate {
-  color: #6D6C93;
+  color: #AAA7A7;
 
 }
 
@@ -192,7 +192,7 @@ body {
 .stat-card p {
   text-align: left;
   font-weight: 500;
-  color: #6E6C94;
+  color: #AAA7A7;
   font-size: 15px;
 }
 
@@ -220,7 +220,7 @@ body {
 
 .profile-sidebar p {
   font-size: 14px;
-  color: #6E6C94;
+  color: #AAA7A7;
   margin-top: 5px;
 }
 
@@ -427,10 +427,10 @@ body {
   background-color: var(--shadow-color);
   outline: none;
   border-radius: 5px;
-  color: #6E6C94;
+  color: #AAA7A7;
 }
 .chart-header select::placeholder{
-  color: #6E6C94;
+  color: #AAA7A7;
 }
 
 .chart-header input {
@@ -438,11 +438,11 @@ body {
   border: 1px solid #373E48;
   outline: none;
   border-radius: 5px;
-  color: #6E6C94;
+  color: #AAA7A7;
 }
 
 .chart-header input::placeholder {
-  color: #6E6C94;
+  color: #AAA7A7;
 }
 
 /* .........toast... */
@@ -458,6 +458,8 @@ body {
   border-left: 6px solid #0C0A36;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.24);
+    margin-top: 10px !important; 
+
 }
 
 /* Info style */
@@ -660,6 +662,9 @@ body {
   .dashboard-topbar {
     padding: 15px 15px;
   }
+  .Toastify__toast {
+    margin-top: 15px !important; 
+}
 }
 
 @media screen and (max-width: 420px) {

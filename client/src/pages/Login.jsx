@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { AiOutlineClose, AiOutlineLock } from "react-icons/ai";
@@ -7,33 +7,50 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Slide } from 'react-toastify';
 import '../styles/signin.css';
+import { useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
 
 export default function Login() {
   const [form, setForm] = useState({ email: '', password: '' });
   const navigate = useNavigate();
+ const { login } = useContext(AuthContext);
 
   const handleChange = e => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async e => {
-    e.preventDefault();
+  useEffect(() => {
+  const checkIfLoggedToday = async () => {
+    try {
+      const res = await axios.get(`${import.meta.env.VITE_BACKEND_LINK}/api/logs/check-today`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+      });
+      if (!res.data.hasLoggedToday) {
+        navigate('/log-entry');
+      }
+    } catch (err) {
+      console.error('Failed to check today\'s log:', err);
+    }
+  };
+  checkIfLoggedToday();
+}, []);
+
+const handleSubmit = async e => {
+  e.preventDefault();
     try {
       const res = await axios.post(`${import.meta.env.VITE_BACKEND_LINK}/api/auth/login`, form);
       const token = res.data.token;
-      localStorage.setItem('token', token);
+      
+      login(token); // ✅ Update auth context state
 
-      // Show success toast
       toast.success("Login successful!", {
-        progressStyle: { backgroundColor: '#10b981' } 
+        progressStyle: { backgroundColor: '#10b981' }
       });
 
-      // NEW: check if today's log exists
       const check = await axios.get(`${import.meta.env.VITE_BACKEND_LINK}/api/logs/check-today`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
-      // Redirect after a short delay to let toast appear
       setTimeout(() => {
         if (check.data.hasLoggedToday) {
           navigate('/dashboard');
@@ -42,28 +59,24 @@ export default function Login() {
         }
       }, 1000);
 
+    } catch (err) {   
+     const msg = err.response?.data?.msg;
+
+    if (msg === "Incorrect password") {
+      toast.error("Password is incorrect", {
+        progressStyle: { backgroundColor: '#f87171' }
+      });
+    } else if (msg === "Email not found") {
+      toast.error("No account with this email", {
+        progressStyle: { backgroundColor: '#f87171' }
+      });
+    } else {
+      toast.error("Login failed", {
+        progressStyle: { backgroundColor: '#f87171' }
+      });
     }
-    catch (err) {
-      const msg = err.response?.data?.msg;
-
-      if (msg === "Incorrect password") {
-        toast.error("Password is incorrect", {
-          progressStyle: { backgroundColor: '#f87171' }
-        });
-      } else if (msg === "Email not found") {
-        toast.error("No account with this email", {
-          progressStyle: { backgroundColor: '#f87171' }
-        });
-      } else {
-        toast.error("Login failed", {
-          progressStyle: { backgroundColor: '#f87171' }
-        });
-      }
-    }
-
-
-  };
-
+  }
+};
 
   return (
     <div className=" loginMainS ">
@@ -120,7 +133,6 @@ export default function Login() {
           </button>
         </div>
       </div>
-
       <ToastContainer
         position="top-center"
         autoClose={3000}

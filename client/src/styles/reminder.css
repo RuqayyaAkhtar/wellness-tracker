@@ -243,7 +243,7 @@
   outline: none;
   background-color: var(--shadow-color);
   padding: 5px 20px;
-  color: #6E6C94 !important;
+  color: #AAA7A7 !important;
 }
 
 .form-r button {
@@ -257,12 +257,12 @@
 }
 
 .form-r input::placeholder {
-  color: #6E6C94;
+  color: #AAA7A7;
   font-size: 12px;
 }
 
 .no-remind {
-  color: #6E6C94;
+  color: #AAA7A7;
 
 }
 
@@ -311,7 +311,6 @@
   .reminder-item1 {
     padding: 10px;
     border-radius: 10px;
-    background-color: #182158;
     margin: 0;
   }
   .small-rd{
@@ -347,7 +346,6 @@
   .reminder-item1 {
     padding: 10px;
     border-radius: 10px;
-    background-color: #182158;
     margin: 0;
   }
   .reminder-item1 p{
