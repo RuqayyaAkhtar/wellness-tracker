@@ -31,66 +31,57 @@ export default function Register() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const validateEmail = (email) => {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  };
+ const validateEmail = (email) => {
+  return /^[^\s@]+@[^\s@]+\.(com|net|org|edu|gov|pk)$/.test(email);
+};
 
-  const handleSubmit = async e => {
-    e.preventDefault();
+const handleSubmit = async e => {
+  e.preventDefault();
 
-    // Simple validation
-    if (!form.name || !form.email || !form.password) {
-      toast.error("All fields are required.", {
-        progressStyle: { backgroundColor: '#f87171' } 
-      });
-      return;
-    }
+  if (!form.name || !form.email || !form.password) {
+    toast.error("All fields are required.", {
+      progressStyle: { backgroundColor: '#f87171' }
+    });
+    return;
+  }
 
-    if (!validateEmail(form.email)) {
-      toast.error("Please enter a valid email address.", {
-        progressStyle: { backgroundColor: '#f87171' }
-      });
-      return;
-    }
+  if (!validateEmail(form.email)) {
+    toast.error("Please enter a valid email address.", {
+      progressStyle: { backgroundColor: '#f87171' }
+    });
+    return;
+  }
 
-    if (form.password.length < 8) {
-      toast.error("Password must be at least 8 characters long.", {
-        progressStyle: { backgroundColor: '#f87171' }
-      });
-      return;
-    }
-    // Password strength regex: at least 8 chars, 1 letter, 1 digit
+  if (form.password.length < 8) {
+    toast.error("Password must be at least 8 characters long.", {
+      progressStyle: { backgroundColor: '#f87171' }
+    });
+    return;
+  }
 
-    if (!passwordRegex.test(form.password)) {
-      toast.error("Password must contain at least 8 characters, including letters and numbers.", {
-        progressStyle: { backgroundColor: '#f87171' }
-      });
-      return;
-    }
-    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
-    if (!passwordRegex.test(form.password)) {
-      toast.error("Password must include letters, numbers, and a special character.", {
-        progressStyle: { backgroundColor: '#f87171' }
-      });
-      return;
-    }
+  if (!passwordRegex.test(form.password)) {
+    toast.error("Password must include at least 8 characters, with letters, numbers, and a special character.", {
+      progressStyle: { backgroundColor: '#f87171' }
+    });
+    return;
+  }
 
+  try {
+    const res = await axios.post(`${import.meta.env.VITE_BACKEND_LINK}/api/auth/register`, form);
+    localStorage.setItem('token', res.data.token);
+    toast.success("Registered successfully!", {
+      progressStyle: { backgroundColor: '#10b981' }
+    });
+    setTimeout(() => navigate('/'), 2000);
+  } catch (err) {
+    toast.error(err.response?.data?.msg || "Registration failed", {
+      progressStyle: { backgroundColor: '#f87171' }
+    });
+  }
+};
 
-
-    try {
-      const res = await axios.post(`${import.meta.env.VITE_BACKEND_LINK}/api/auth/register`, form);
-      localStorage.setItem('token', res.data.token);
-      toast.success("Registered successfully!", {
-        progressStyle: { backgroundColor: '#10b981' } // green
-      });
-      setTimeout(() => navigate('/'), 2000);
-    } catch (err) {
-      toast.error(err.response?.data?.msg || "Registration failed", {
-        progressStyle: { backgroundColor: '#f87171' }
-      });
-    }
-  };
 
   return (
     <div className="loginMain">
