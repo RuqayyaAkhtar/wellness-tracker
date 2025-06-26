@@ -7,17 +7,39 @@ const router = express.Router();
 
 router.post('/', verifyToken, async (req, res) => {
   try {
+    const userId = req.user.id;
+    const todayStart = moment().startOf('day').toDate();
+    const todayEnd = moment().endOf('day').toDate();
+
+    const existingLog = await Log.findOne({
+      userId,
+      timestamp: { $gte: todayStart, $lte: todayEnd },
+      type: 'daily_log'
+    });
+
+    if (existingLog) {
+      existingLog.data = {
+        ...existingLog.data,
+        ...req.body.data
+      };
+      existingLog.timestamp = new Date(); // update timestamp
+      await existingLog.save();
+      return res.status(200).json({ updated: true, log: existingLog });
+    }
+
     const newLog = await Log.create({
-      userId: req.user.id,
+      userId,
       type: req.body.type,
       data: req.body.data,
       timestamp: req.body.timestamp || new Date()
     });
-    res.status(201).json(newLog);
+
+    res.status(201).json({ created: true, log: newLog });
   } catch (err) {
-    res.status(500).json({ msg: 'Failed to create log', error: err.message });
+    res.status(500).json({ msg: 'Failed to save log', error: err.message });
   }
 });
+
 
 router.put('/:id', verifyToken, async (req, res) => {
   try {

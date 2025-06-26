@@ -57,7 +57,8 @@ export default function DashboardCharts({ logs }) {
     value: count,
     color: COLORS[i % COLORS.length]
   }));
-  const customColors = ['#00A2FF', '#3C39AB', '#28BE9D', '#FFAB2D', '#FD5353'];
+  
+  const customColors = ['#00A2FF', '#FD5353', '#3C39AB', '#28BE9D', '#FFAB2D'];
   const moodLabelMap = {
     '😊': 'Happy',
     '😟': 'Sad',

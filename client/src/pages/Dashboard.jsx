@@ -131,13 +131,14 @@ export default function Dashboard() {
   };
   const saveEditedLog = async value => {
     try {
-      await axios.put(
-        `${import.meta.env.VITE_BACKEND_LINK}/api/logs/${editLogId}`,
-        { data: { ...logs.find(l => l._id === editLogId).data, [editField]: value } },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      setEditField(null); fetchLogs();
-    } catch {
+    await axios.put(
+      `${import.meta.env.VITE_BACKEND_LINK}/api/logs/${editLogId}`,
+      { data: { ...logs.find(l => l._id === editLogId).data, [editField]: value } },
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    setEditField(null);
+    fetchLogs(); 
+  }  catch {
       console.error('Failed to save log');
       toast.error('Failed to save log. Please try again.');
       setEditField(null);
@@ -164,7 +165,7 @@ const playReminderSound = () => {
     console.warn('Audio play error:', e);
   });
 };
-
+console.log(logs)
 useEffect(() => {
   if (!user) return;
 
@@ -265,7 +266,8 @@ useEffect(() => {
 
   return () => clearInterval(interval);
 }, []);
-// nagivate to log-entry
+
+
 
   return (
     <div className="dashboard-container dMain">
