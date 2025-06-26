@@ -266,24 +266,6 @@ useEffect(() => {
   return () => clearInterval(interval);
 }, []);
 // nagivate to log-entry
-  useEffect(() => {
-    const checkIfLoggedToday = async () => {
-      try {
-        const res = await axios.get(`${import.meta.env.VITE_BACKEND_LINK}/api/logs/check-today`, {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
-        });
-
-        if (!res.data.hasLoggedToday) {
-          navigate('/log-entry');
-        }
-      } catch (err) {
-        console.error('Failed to check today\'s log:', err);
-        navigate('/');
-      }
-    };
-
-    checkIfLoggedToday();
-  }, []);
 
   return (
     <div className="dashboard-container dMain">
