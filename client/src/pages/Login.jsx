@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { AiOutlineClose, AiOutlineLock } from "react-icons/ai";
 import { BsPersonPlus, BsPerson } from "react-icons/bs";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Slide } from 'react-toastify';
@@ -14,7 +15,7 @@ export default function Login() {
   const [form, setForm] = useState({ email: '', password: '' });
   const navigate = useNavigate();
   const { login } = useContext(AuthContext);
-
+  const [showPassword,setShowPassword]=useState(false);
   const handleChange = e => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -91,11 +92,16 @@ export default function Login() {
               id="pass"
               name="password"
               onChange={handleChange}
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               required
               className="w-full focus:outline-none bg-in"
               placeholder="Enter your password"
             />
+            <p className='cursor-pointer text-gray-600 ic'
+            onClick={()=>{setShowPassword(!showPassword)}} 
+            >
+            {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
+            </p>
           </div>
 
           <button type="submit" className="w-full py-2 rounded transition loginBtn" id="loginBtn">
